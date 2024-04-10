@@ -19,8 +19,9 @@ const flowPrincipal = bot
   .addAnswer([
     `Bienvenidos Soy Kami y soy tu asistente! `,
     `Me complace mostrate mis servicios`,
-    `Te gustaria conocerlos?`,
-    `Escribe *menu*`,
+    `1. Mantenimmiento de computadores`,
+    `2. chatbots personalizados `,
+    `3. Desarrollo de sofware`
   ]);
 
 
