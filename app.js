@@ -20,24 +20,36 @@ const flowPrincipal = bot
     `Bienvenidos Soy Kami y soy tu asistente! `,
     `Me complace mostrate mis servicios`,
     `1. Mantenimmiento de computadores`,
-    `2. chatbots personalizados `,
+    `2. chatbots para whatsapp `,
     `3. Desarrollo de sofware`
-  ]);
-  // .addAnswer(1, async (_, { gotoFlow }) => {
-  //   return gotoFlow(flowMantenimiento_uno);
-  // });
+  ])
+  .addAnswer("1", async (_, { gotoFlow }) => {
+    return gotoFlow(flowMantenimiento_uno);
+  });
 
 
 const flowMantenimiento_uno = bot
   .addKeyword(["1", "mantenimiento"])
   .addAnswer([
     `Elegiste la opcion mantenimiento  `,
-    `Me complace mostrate mis servicios`,
-    `1. Mantenimmiento de computadores`,
-    `2. chatbots personalizados `,
-    `3. Desarrollo de sofware`
+    `1. Pc escritorio`,
+    `2. Laptop o portatil `,
+    `3. Servidor`
   ]);
+  .addAnswer("1", async (_, { gotoFlow }) => {
+    return gotoFlow(flowMantenimiento_dos);
+  });
 
+const flowMantenimiento_dos = bot
+  .addKeyword(["1", "mantenimiento"])
+  .addAnswer([
+    `Elegiste la opcion mantenimiento  `,
+    `1. Pc escritorio`,
+    `2. Laptop o portatil `,
+    `3. Servidor`
+  ]);
+  .addAnswer("1", async (_, { gotoFlow }) => {
+    return gotoFlow(flowMantenimiento_dos);
 const flowEmpty = bot
   .addKeyword(bot.EVENTS.ACTION)
   .addAnswer("No te he entendido!", null, async (_, { gotoFlow }) => {
