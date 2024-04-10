@@ -1,55 +1,100 @@
 // import "dotenv/config";
 import bot from "@bot-whatsapp/bot";
-// import { getDay } from "date-fns";
+import { getDay } from "date-fns";
 import QRPortalWeb from "@bot-whatsapp/portal";
 import BaileysProvider from "@bot-whatsapp/provider/baileys";
 import MockAdapter from "@bot-whatsapp/database/mock";
-
+//
 // import chatgpt from "./services/openai/chatgpt.js";
 // import GoogleSheetService from "./services/sheets/index.js";
-
+//
 // const googelSheet = new GoogleSheetService(
 //   "1rDDWdRcLmecRhDSepMZdJwxMIp8iOxZMjDKuh2dA6W8"
 // );
 
 const GLOBAL_STATE = [];
 
+
+// Diccionario de claves y respuestas
+const respuestas = {
+  "1": "computadores",
+  "2": "laptops",
+  // Agrega más claves y respuestas según sea necesario
+};
+
+// Flujo principal
 const flowPrincipal = bot
   .addKeyword(["hola", "hi"])
   .addAnswer([
-    `Bienvenidos Soy Kami y soy tu asistente! `,
-    `Me complace mostrate mis servicios`,
-    `1. Mantenimmiento de computadores`,
-    `2. chatbots para whatsapp `,
-    `3. Desarrollo de sofware`
-  ])
-  .addAnswer("1", async (_, { gotoFlow }) => {
-    return gotoFlow(flowMantenimiento_uno);
-  });
-
-
-const flowMantenimiento_uno = bot
-  .addKeyword(["1", "mantenimiento"])
-  .addAnswer([
-    `Elegiste la opcion mantenimiento  `,
-    `1. Pc escritorio`,
-    `2. Laptop o portatil `,
-    `3. Servidor`
+    `Bienvenidos, soy Kami y soy tu asistente!`,
+    `Por favor, selecciona una opción:`,
+    `1. Computadores`,
+    `2. Laptops`
   ]);
-  .addAnswer("1", async (_, { gotoFlow }) => {
-    return gotoFlow(flowMantenimiento_dos);
-  });
 
-const flowMantenimiento_dos = bot
-  .addKeyword(["1", "mantenimiento"])
+// Manejar respuestas del usuario
+for (const clave in respuestas) {
+  const respuesta = respuestas[clave];
+
+  const handleRespuesta = async (_, { gotoFlow }) => {
+    // Aquí puedes agregar la lógica adicional que necesites
+    // para manejar la respuesta específica
+    return gotoFlow(flowRespuesta(respuesta));
+  };
+
+  flowPrincipal.addAnswer(clave, handleRespuesta);
+}
+
+// Flujo para mostrar la respuesta correspondiente
+const flowRespuesta = (respuesta) => bot
+  .addKeyword(["respuesta"])
   .addAnswer([
-    `Elegiste la opcion mantenimiento  `,
-    `1. Pc escritorio`,
-    `2. Laptop o portatil `,
-    `3. Servidor`
+    `Elegiste: ${respuesta}`,
+    // Agrega más detalles o instrucciones según sea necesario
   ]);
-  .addAnswer("1", async (_, { gotoFlow }) => {
-    return gotoFlow(flowMantenimiento_dos);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const flowEmpty = bot
   .addKeyword(bot.EVENTS.ACTION)
   .addAnswer("No te he entendido!", null, async (_, { gotoFlow }) => {
@@ -91,8 +136,8 @@ const main = async () => {
   const adapterDB = new MockAdapter();
   const adapterFlow = bot.createFlow([
     flowPrincipal,
-    // flowMenu,\
-    flowMantenimiento_uno,
+    // flowMenu,
+    flowRespuesta,
     flowPedido,
     flowEmpty,
   ]);
