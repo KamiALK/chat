@@ -1,6 +1,6 @@
 // import "dotenv/config";
 import bot from "@bot-whatsapp/bot";
-import { getDay } from "date-fns";
+// import { getDay } from "date-fns";
 import QRPortalWeb from "@bot-whatsapp/portal";
 import BaileysProvider from "@bot-whatsapp/provider/baileys";
 import MockAdapter from "@bot-whatsapp/database/mock";
@@ -23,7 +23,20 @@ const flowPrincipal = bot
     `2. chatbots personalizados `,
     `3. Desarrollo de sofware`
   ]);
+  // .addAnswer(1, async (_, { gotoFlow }) => {
+  //   return gotoFlow(flowMantenimiento_uno);
+  // });
 
+
+const flowMantenimiento_uno = bot
+  .addKeyword(["1", "mantenimiento"])
+  .addAnswer([
+    `Elegiste la opcion mantenimiento  `,
+    `Me complace mostrate mis servicios`,
+    `1. Mantenimmiento de computadores`,
+    `2. chatbots personalizados `,
+    `3. Desarrollo de sofware`
+  ]);
 
 const flowEmpty = bot
   .addKeyword(bot.EVENTS.ACTION)
@@ -66,7 +79,8 @@ const main = async () => {
   const adapterDB = new MockAdapter();
   const adapterFlow = bot.createFlow([
     flowPrincipal,
-    // flowMenu,
+    // flowMenu,\
+    flowMantenimiento_uno,
     flowPedido,
     flowEmpty,
   ]);
