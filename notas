@@ -1,0 +1,10 @@
+tuve que correr  el dockerfile 
+    
+docker run --name mi_chatbot -d chatbot
+
+luego tambien tuve que mirar el numero del contenedor
+     docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' mi_chatbot
+
+     y luego ded obtener la ip del contenedor  
+      http://172.17.0.2:3000
+      Escaneas el codigo

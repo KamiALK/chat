@@ -25,6 +25,7 @@ const OTROS = [
 const flowPrincipal = bot
   .addKeyword(["hola", "hi"])
   .addAnswer([
+    `costa es gay`,  
     `Bienvenidos soy *Kami dev*! 🚀,Te acompanare a conocer mis servicios, por favor escribe la palabra *si* o *continuar*`,
   ]);
 
