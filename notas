@@ -1,4 +1,5 @@
 tuve que correr  el dockerfile 
+docker build -t chatbot .
     
 docker run --name mi_chatbot -d chatbot
 
