@@ -9,3 +9,73 @@ luego tambien tuve que mirar el numero del contenedor
      y luego ded obtener la ip del contenedor  
       http://172.17.0.2:3000
       Escaneas el codigo
+
+
+
+Aquí hay una forma de hacerlo:
+
+    Crea un script de inicio en el directorio /etc/init.d/. Por ejemplo, podrías nombrarlo start_chatbot.
+
+bash
+
+sudo nano /etc/init.d/start_chatbot
+
+    Agrega el siguiente contenido al archivo del script de inicio. Asegúrate de modificar mi_chatbot con el nombre de tu contenedor Docker.
+
+bash
+
+#!/bin/bash
+### BEGIN INIT INFO
+# Provides:          start_chatbot
+# Required-Start:    $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start Chatbot Docker container
+# Description:       Start Chatbot Docker container on system boot using Docker start command.
+### END INIT INFO
+
+start() {
+    echo "Starting Chatbot Docker container..."
+    /usr/bin/docker start mi_chatbot
+}
+
+stop() {
+    echo "Stopping Chatbot Docker container..."
+    /usr/bin/docker stop mi_chatbot
+}
+
+case "$1" in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    restart)
+        stop
+        start
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|restart}"
+        exit 1
+        ;;
+esac
+
+exit 0
+
+    Guarda el archivo y ciérralo.
+
+    Dale permisos de ejecución al script:
+
+bash
+
+sudo chmod +x /etc/init.d/start_chatbot
+
+    Añade el script al inicio del sistema:
+
+bash
+
+sudo update-rc.d start_chatbot defaults
+
+Ahora, tu contenedor Docker debería iniciarse automáticamente cada vez que la Raspberry Pi se inicie. Puedes probarlo reiniciando tu Raspberry Pi y verificando si el contenedor se inicia automáticamente.
